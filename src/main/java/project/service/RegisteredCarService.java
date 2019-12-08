@@ -14,19 +14,24 @@ import java.util.logging.Logger;
 @Service
 public class RegisteredCarService {
 
+    private Logger log = Logger.getLogger("RegisteredCarService");
+
     @Autowired
     private RegisteredCarRepository rcRepository;
 
-    public void addCarToDatabase(Car newCar) {
+    public RegisteredCar addCarToDatabase(Car newCar) {
 
         RegisteredCar registeredCar = new RegisteredCar();
         registeredCar.setId(0);
         registeredCar.setCarNumber(newCar.getCarNumber());
         Date date = new Date();
-        registeredCar.setDate(new Timestamp(date.getTime()));
+        registeredCar.setTimestamp(new Timestamp(date.getTime()));
 
         rcRepository.save(registeredCar);
 
+        log.info("New registered car: " + newCar);
+
+        return registeredCar;
     }
 
 }

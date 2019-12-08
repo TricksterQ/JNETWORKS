@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import project.pojo.Car;
+import project.pojo.RegisteredCar;
 import project.service.RegisteredCarService;
 
 import java.util.logging.Logger;
@@ -18,9 +19,9 @@ public class RegisteredCarController {
     private Logger log = Logger.getLogger("RegisteredCarController");
 
     @PostMapping("/registeredCars")
-    public void registerACar(@RequestBody Car newCar) {
-        registeredCarService.addCarToDatabase(newCar);
-        log.info("New registered registeredCar: " + newCar);
+    public RegisteredCar registerACar(@RequestBody Car newCar) {
+
+        return registeredCarService.addCarToDatabase(newCar);
 
     }
 

@@ -18,6 +18,6 @@ public class RegisteredCar {
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "registered_car_seq")
     private long id;
     private String carNumber;
-    private Timestamp date;
+    private Timestamp timestamp;
 
 }
