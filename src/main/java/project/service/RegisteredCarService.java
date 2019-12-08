@@ -34,4 +34,9 @@ public class RegisteredCarService {
         return registeredCar;
     }
 
+    public Long getRegisteredCarsCount() {
+        return rcRepository.count();
+    }
+
+
 }
