@@ -1,6 +1,9 @@
 package project.service;
 
+import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import project.pojo.Car;
 import project.pojo.RegisteredCar;
@@ -17,25 +20,26 @@ public class RegisteredCarService {
     private Logger log = Logger.getLogger("RegisteredCarService");
 
     @Autowired
-    private RegisteredCarRepository rcRepository;
+    private RegisteredCarRepository registeredCarRepository;
 
     public RegisteredCar addCarToDatabase(Car newCar) {
+        RegisteredCar registeredCar = new RegisteredCar(
+                newCar.getCarNumber(),
+                new Timestamp(new Date().getTime())
+        );
 
-        RegisteredCar registeredCar = new RegisteredCar();
-        registeredCar.setId(0);
-        registeredCar.setCarNumber(newCar.getCarNumber());
-        Date date = new Date();
-        registeredCar.setTimestamp(new Timestamp(date.getTime()));
-
-        rcRepository.save(registeredCar);
-
-        log.info("New registered car: " + newCar);
-
+        registeredCarRepository.save(registeredCar);
+        log.info("New registered car: " + registeredCar);
         return registeredCar;
     }
 
     public Long getRegisteredCarsCount() {
-        return rcRepository.count();
+        return registeredCarRepository.count();
+    }
+
+
+    public Page<RegisteredCar> getRegisteredCars(Predicate predicate, int page, int size) {
+        return registeredCarRepository.findAll(predicate, PageRequest.of(page, size));
     }
 
 

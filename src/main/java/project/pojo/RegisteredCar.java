@@ -1,5 +1,7 @@
 package project.pojo;
 
+import com.querydsl.core.annotations.QueryEntity;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,9 +11,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.sql.Timestamp;
 
+
 @Data
-@NoArgsConstructor
 @Entity(name = "registered_car")
+@AllArgsConstructor
+@NoArgsConstructor
+@QueryEntity
 public class RegisteredCar {
 
     @Id
@@ -20,4 +25,8 @@ public class RegisteredCar {
     private String carNumber;
     private Timestamp timestamp;
 
+    public RegisteredCar(String carNumber, Timestamp timestamp) {
+        this.carNumber = carNumber;
+        this.timestamp = timestamp;
+    }
 }
