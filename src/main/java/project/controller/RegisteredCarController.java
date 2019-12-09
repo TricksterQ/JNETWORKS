@@ -4,11 +4,13 @@ import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import project.pojo.Car;
 import project.pojo.RegisteredCar;
 import project.service.RegisteredCarService;
 
+import javax.validation.Valid;
 import java.util.logging.Logger;
 
 
@@ -21,7 +23,7 @@ public class RegisteredCarController {
     private Logger log = Logger.getLogger("RegisteredCarController");
 
     @PostMapping("/registeredCars")
-    public RegisteredCar registerACar(@RequestBody Car newCar) {
+    public RegisteredCar registerACar(@Valid @RequestBody Car newCar) {
         return registeredCarService.addCarToDatabase(newCar);
     }
 
