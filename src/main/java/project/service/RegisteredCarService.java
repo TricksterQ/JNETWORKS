@@ -9,8 +9,7 @@ import project.pojo.Car;
 import project.pojo.RegisteredCar;
 import project.repository.RegisteredCarRepository;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import java.time.OffsetDateTime;
 import java.util.logging.Logger;
 
 
@@ -25,9 +24,8 @@ public class RegisteredCarService {
     public RegisteredCar addCarToDatabase(Car newCar) {
         RegisteredCar registeredCar = new RegisteredCar(
                 newCar.getCarNumber(),
-                new Timestamp(new Date().getTime())
+                OffsetDateTime.now()
         );
-
         registeredCarRepository.save(registeredCar);
         log.info("New registered car: " + registeredCar);
         return registeredCar;
@@ -39,8 +37,7 @@ public class RegisteredCarService {
 
 
     public Page<RegisteredCar> getRegisteredCars(Predicate predicate, int page, int size) {
-        return registeredCarRepository.findAll(predicate, PageRequest.of(page, size));
+         return registeredCarRepository.findAll(predicate, PageRequest.of(page, size));
     }
-
 
 }

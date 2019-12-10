@@ -7,5 +7,4 @@ import project.pojo.RegisteredCar;
 public interface RegisteredCarRepository extends
         CrudRepository<RegisteredCar, Long>,
         QuerydslPredicateExecutor<RegisteredCar> {
-
 }
