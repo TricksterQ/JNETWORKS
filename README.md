@@ -7,4 +7,5 @@ Steps to run this project:
 5)Visit the following endpoint within your browser: http://localhost:8081/swagger-ui.html#/
 
 Requirements:  
-1)Java 8
+1)Java 8 or later
+2)Maven 3 or later
