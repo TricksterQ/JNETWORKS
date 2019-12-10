@@ -6,5 +6,5 @@ Steps to run this project:
 4)Run the application with `java -jar target/jnetwork-1.0-SNAPSHOT.jar`  
 5)Visit the following endpoint within your browser: http://localhost:8081/swagger-ui.html#/
 
-requirements:
-Java 8
+requirements:  
+1)Java 8
