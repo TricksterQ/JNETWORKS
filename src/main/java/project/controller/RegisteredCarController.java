@@ -35,7 +35,7 @@ public class RegisteredCarController {
     }
 
     @GetMapping("/RegisteredCars")
-    public List<ResponseCar> getRegisteredCarsList(
+    public List<ResponseCar> getRegisteredCars(
             @RequestParam(name = "carNumber", required = false) String carNumber,
             @RequestParam(name = "date", required = false) String sDate
     ) {

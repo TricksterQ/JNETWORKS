@@ -1,17 +1,14 @@
 package project.service;
 
-import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.pojo.RegisteredCarsCount;
 import project.pojo.ResponseCar;
 import project.pojo.Car;
 import project.pojo.RegisteredCar;
-import project.repository.RegCarRepository;
 import project.repository.RegisteredCarRepository;
+import project.repository.RegisteredCarCounterRepository;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -27,10 +24,10 @@ public class RegisteredCarService {
     private Logger log = Logger.getLogger("RegisteredCarService");
 
     @Autowired
-    private RegisteredCarRepository registeredCarRepository;
+    private RegisteredCarCounterRepository registeredCarCounterRepository;
 
     @Autowired
-    private RegCarRepository regCarRepository;
+    private RegisteredCarRepository registeredCarRepository;
 
     @Transactional
     public ResponseCar addCarToDatabase(Car newCar) {
@@ -45,14 +42,14 @@ public class RegisteredCarService {
     }
 
     public RegisteredCarsCount getRegisteredCarsCount() {
-        return new RegisteredCarsCount(registeredCarRepository.count());
+        return new RegisteredCarsCount(registeredCarCounterRepository.count());
     }
 
     public List<ResponseCar> getRegisteredCarsByNumberAndDate(String carNumber, String sDate) {
         LocalDate date = LocalDate.parse(sDate, DateTimeFormatter.ofPattern("yyyyMMdd"));
         List<ResponseCar> resultDtos = new ArrayList<>();
 
-        regCarRepository.findByCarNumberAndDate(carNumber, date).forEach(
+        registeredCarRepository.findByCarNumberAndDate(carNumber, date).forEach(
                 RegisteredCar -> {
                     ResponseCar car = new ResponseCar(
                             RegisteredCar.getCarNumber(),
@@ -66,7 +63,7 @@ public class RegisteredCarService {
 
     public List<ResponseCar> getRegisteredCars() {
         List<ResponseCar> resultDtos = new ArrayList<>();
-        regCarRepository.findAll().forEach(
+        registeredCarRepository.findAll().forEach(
                 RegisteredCar -> {
                     ResponseCar car = new ResponseCar(
                             RegisteredCar.getCarNumber(),
@@ -80,7 +77,7 @@ public class RegisteredCarService {
 
     public List<ResponseCar> getRegisteredCarsByNumber(String carNumber) {
         List<ResponseCar> resultDtos = new ArrayList<>();
-        regCarRepository.findByCarNumber(carNumber).forEach(
+        registeredCarRepository.findByCarNumber(carNumber).forEach(
                 RegisteredCar -> {
                     ResponseCar car = new ResponseCar(
                             RegisteredCar.getCarNumber(),
@@ -96,7 +93,7 @@ public class RegisteredCarService {
         LocalDate date = LocalDate.parse(sDate, DateTimeFormatter.ofPattern("yyyyMMdd"));
         List<ResponseCar> resultDtos = new ArrayList<>();
 
-        regCarRepository.findByDate(date).forEach(
+        registeredCarRepository.findByDate(date).forEach(
                 RegisteredCar -> {
                     ResponseCar car = new ResponseCar(
                             RegisteredCar.getCarNumber(),
