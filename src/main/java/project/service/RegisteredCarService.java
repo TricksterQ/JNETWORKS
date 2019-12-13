@@ -3,7 +3,7 @@ package project.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project.pojo.RegisteredCarsCount;
+import project.pojo.RegisteredCarsCounter;
 import project.pojo.ResponseCar;
 import project.pojo.Car;
 import project.pojo.RegisteredCar;
@@ -41,8 +41,8 @@ public class RegisteredCarService {
         return new ResponseCar(registeredCar.getCarNumber(), registeredCar.getTimestamp());
     }
 
-    public RegisteredCarsCount getRegisteredCarsCount() {
-        return new RegisteredCarsCount(registeredCarCounterRepository.count());
+    public RegisteredCarsCounter getRegisteredCarsCount() {
+        return new RegisteredCarsCounter(registeredCarCounterRepository.count());
     }
 
     public List<ResponseCar> getRegisteredCarsByNumberAndDate(String carNumber, String sDate) {
