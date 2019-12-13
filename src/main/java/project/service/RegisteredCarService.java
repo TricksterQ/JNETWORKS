@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import project.pojo.ResponseCar;
 import project.pojo.Car;
 import project.pojo.RegisteredCar;
 import project.repository.RegisteredCarRepository;
@@ -21,14 +22,15 @@ public class RegisteredCarService {
     @Autowired
     private RegisteredCarRepository registeredCarRepository;
 
-    public RegisteredCar addCarToDatabase(Car newCar) {
+    public ResponseCar addCarToDatabase(Car newCar) {
         RegisteredCar registeredCar = new RegisteredCar(
                 newCar.getCarNumber(),
                 OffsetDateTime.now()
         );
         registeredCarRepository.save(registeredCar);
         log.info("New registered car: " + registeredCar);
-        return registeredCar;
+
+        return new ResponseCar(registeredCar.getCarNumber(), registeredCar.getTimestamp());
     }
 
     public Long getRegisteredCarsCount() {
@@ -37,7 +39,7 @@ public class RegisteredCarService {
 
 
     public Page<RegisteredCar> getRegisteredCars(Predicate predicate, int page, int size) {
-         return registeredCarRepository.findAll(predicate, PageRequest.of(page, size));
+        return registeredCarRepository.findAll(predicate, PageRequest.of(page, size));
     }
 
 }
