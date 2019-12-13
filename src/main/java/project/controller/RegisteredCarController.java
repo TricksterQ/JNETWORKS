@@ -12,8 +12,7 @@ import project.pojo.RegisteredCar;
 import project.service.RegisteredCarService;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.logging.Logger;
 
 
@@ -35,17 +34,20 @@ public class RegisteredCarController {
         return registeredCarService.getRegisteredCarsCount();
     }
 
-    @GetMapping("/registeredCars")
-    public Page<RegisteredCar> getFilteredRegisteredCars(
-            @QuerydslPredicate(root = RegisteredCar.class) Predicate predicate,
-            @RequestParam(name = "carName", required = false) String carName,
-            @RequestParam(name = "date", required = false) String sDate,
-            @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "10") int size
+    @GetMapping("/RegisteredCars")
+    public List<ResponseCar> getRegisteredCarsList(
+            @RequestParam(name = "carNumber", required = false) String carNumber,
+            @RequestParam(name = "date", required = false) String sDate
     ) {
-        LocalDate date = LocalDate.parse(sDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        if (carNumber != null && sDate != null)
+            return  registeredCarService.getRegisteredCarsByNumberAndDate(carNumber, sDate);
 
-        return registeredCarService.getRegisteredCars(predicate, page, size);
+        if (carNumber != null)
+            return registeredCarService.getRegisteredCarsByNumber(carNumber);
+
+        if (sDate != null)
+            return registeredCarService.getRegisteredCarsByDate(sDate);
+
+        return registeredCarService.getRegisteredCars();
     }
-
 }

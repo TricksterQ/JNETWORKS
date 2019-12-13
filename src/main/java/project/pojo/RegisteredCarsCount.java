@@ -8,6 +8,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class RegisteredCarsCount {
 
-    private Long registeredCarsCount;
+    private long registeredCarsCount;
 
 }
