@@ -21,29 +21,37 @@ public class RegisteredCarRepository {
         entityManager.persist(car);
     }
 
-    public List<RegisteredCar> findByCarNumberAndDate(String carNumber, LocalDate date) {
+    public List<RegisteredCar> findByCarNumberAndDate(String carNumber, LocalDate date, int page, int size) {
         log.info("Search a car by number: " + carNumber + "and date" + date);
         return entityManager.createQuery("from registered_car where car_number like :carNumber and formatdatetime(timestamp, 'yyyy-MM-dd') like :date", RegisteredCar.class)
                 .setParameter("carNumber", "%" + carNumber + "%")
                 .setParameter("date", "%" + date + "%")
+                .setFirstResult((page * size) - size)
+                .setMaxResults(size)
                 .getResultList();
     }
 
-    public List<RegisteredCar> findByCarNumber(String carNumber) {
+    public List<RegisteredCar> findByCarNumber(String carNumber, int page, int size) {
         return entityManager.createQuery("from registered_car where car_number like :carNumber", RegisteredCar.class)
                 .setParameter("carNumber", "%" + carNumber + "%")
+                .setFirstResult((page * size) - size)
+                .setMaxResults(size)
                 .getResultList();
     }
 
 
-    public List<RegisteredCar> findByDate(LocalDate date) {
+    public List<RegisteredCar> findByDate(LocalDate date, int page, int size) {
         return entityManager.createQuery("from registered_car where formatdatetime(timestamp, 'yyyy-MM-dd') like :date", RegisteredCar.class)
                 .setParameter("date", "%" + date + "%")
+                .setFirstResult((page * size) - size)
+                .setMaxResults(size)
                 .getResultList();
     }
 
-    public List<RegisteredCar> findAll() {
-        return entityManager.createQuery("from registered_car order by id ASC limit 5 offset 5", RegisteredCar.class)
+    public List<RegisteredCar> findAll(int page, int size) {
+        return entityManager.createQuery("from registered_car", RegisteredCar.class)
+                .setFirstResult((page * size) - size)
+                .setMaxResults(size)
                 .getResultList();
     }
 

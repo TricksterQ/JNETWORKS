@@ -33,17 +33,19 @@ public class RegisteredCarController {
     @GetMapping("/RegisteredCars")
     public List<ResponseCar> getRegisteredCars(
             @RequestParam(name = "carNumber", required = false) String carNumber,
-            @RequestParam(name = "date", required = false) String sDate
+            @RequestParam(name = "date", required = false) String sDate,
+            @RequestParam(name = "page") int page,
+            @RequestParam(name = "size") int size
     ) {
         if (carNumber != null && sDate != null)
-            return  registeredCarService.getRegisteredCarsByNumberAndDate(carNumber, sDate);
+            return registeredCarService.getRegisteredCarsByNumberAndDate(carNumber, sDate, page, size);
 
         if (carNumber != null)
-            return registeredCarService.getRegisteredCarsByNumber(carNumber);
+            return registeredCarService.getRegisteredCarsByNumber(carNumber, page, size);
 
         if (sDate != null)
-            return registeredCarService.getRegisteredCarsByDate(sDate);
+            return registeredCarService.getRegisteredCarsByDate(sDate, page, size);
 
-        return registeredCarService.getRegisteredCars();
+        return registeredCarService.getRegisteredCars(page, size);
     }
 }

@@ -45,11 +45,11 @@ public class RegisteredCarService {
         return new RegisteredCarsCounter(registeredCarCounterRepository.count());
     }
 
-    public List<ResponseCar> getRegisteredCarsByNumberAndDate(String carNumber, String sDate) {
+    public List<ResponseCar> getRegisteredCarsByNumberAndDate(String carNumber, String sDate, int page, int size) {
         LocalDate date = LocalDate.parse(sDate, DateTimeFormatter.ofPattern("yyyyMMdd"));
         List<ResponseCar> resultDtos = new ArrayList<>();
 
-        registeredCarRepository.findByCarNumberAndDate(carNumber, date).forEach(
+        registeredCarRepository.findByCarNumberAndDate(carNumber, date, page, size).forEach(
                 RegisteredCar -> {
                     ResponseCar car = new ResponseCar(
                             RegisteredCar.getCarNumber(),
@@ -61,9 +61,9 @@ public class RegisteredCarService {
         return resultDtos;
     }
 
-    public List<ResponseCar> getRegisteredCars() {
+    public List<ResponseCar> getRegisteredCars(int page, int size) {
         List<ResponseCar> resultDtos = new ArrayList<>();
-        registeredCarRepository.findAll().forEach(
+        registeredCarRepository.findAll(page, size).forEach(
                 RegisteredCar -> {
                     ResponseCar car = new ResponseCar(
                             RegisteredCar.getCarNumber(),
@@ -75,9 +75,9 @@ public class RegisteredCarService {
         return resultDtos;
     }
 
-    public List<ResponseCar> getRegisteredCarsByNumber(String carNumber) {
+    public List<ResponseCar> getRegisteredCarsByNumber(String carNumber, int page, int size) {
         List<ResponseCar> resultDtos = new ArrayList<>();
-        registeredCarRepository.findByCarNumber(carNumber).forEach(
+        registeredCarRepository.findByCarNumber(carNumber, page, size).forEach(
                 RegisteredCar -> {
                     ResponseCar car = new ResponseCar(
                             RegisteredCar.getCarNumber(),
@@ -89,11 +89,11 @@ public class RegisteredCarService {
         return resultDtos;
     }
 
-    public List<ResponseCar> getRegisteredCarsByDate(String sDate) {
+    public List<ResponseCar> getRegisteredCarsByDate(String sDate, int page, int size) {
         LocalDate date = LocalDate.parse(sDate, DateTimeFormatter.ofPattern("yyyyMMdd"));
         List<ResponseCar> resultDtos = new ArrayList<>();
 
-        registeredCarRepository.findByDate(date).forEach(
+        registeredCarRepository.findByDate(date, page, size).forEach(
                 RegisteredCar -> {
                     ResponseCar car = new ResponseCar(
                             RegisteredCar.getCarNumber(),
