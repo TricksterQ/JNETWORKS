@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import project.pojo.RegisteredCarsCount;
 import project.pojo.ResponseCar;
 import project.pojo.Car;
 import project.pojo.RegisteredCar;
@@ -33,8 +34,8 @@ public class RegisteredCarService {
         return new ResponseCar(registeredCar.getCarNumber(), registeredCar.getTimestamp());
     }
 
-    public Long getRegisteredCarsCount() {
-        return registeredCarRepository.count();
+    public RegisteredCarsCount getRegisteredCarsCount() {
+        return new RegisteredCarsCount(registeredCarRepository.count());
     }
 
 

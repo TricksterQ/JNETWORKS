@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.web.bind.annotation.*;
 import project.pojo.Car;
+import project.pojo.RegisteredCarsCount;
 import project.pojo.ResponseCar;
 import project.pojo.RegisteredCar;
 import project.service.RegisteredCarService;
@@ -30,7 +31,7 @@ public class RegisteredCarController {
     }
 
     @GetMapping("/registeredCars/count")
-    public Long registeredCarsCount() {
+    public RegisteredCarsCount registeredCarsCount() {
         return registeredCarService.getRegisteredCarsCount();
     }
 
