@@ -3,7 +3,7 @@ package project.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import project.pojo.Car;
-import project.pojo.RegisteredCarsCounter;
+import project.pojo.RegisteredCarsCount;
 import project.pojo.ResponseCar;
 import project.service.RegisteredCarService;
 
@@ -26,7 +26,7 @@ public class RegisteredCarController {
     }
 
     @GetMapping("/registeredCars/count")
-    public RegisteredCarsCounter registeredCarsCount() {
+    public RegisteredCarsCount registeredCarsCount() {
         return registeredCarService.getRegisteredCarsCount();
     }
 
@@ -34,8 +34,8 @@ public class RegisteredCarController {
     public List<ResponseCar> getRegisteredCars(
             @RequestParam(name = "carNumber", required = false) String carNumber,
             @RequestParam(name = "date", required = false) String sDate,
-            @RequestParam(name = "page") int page,
-            @RequestParam(name = "size") int size
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            @RequestParam(name = "size", defaultValue = "5") int size
     ) {
         if (carNumber != null && sDate != null)
             return registeredCarService.getRegisteredCarsByNumberAndDate(carNumber, sDate, page, size);

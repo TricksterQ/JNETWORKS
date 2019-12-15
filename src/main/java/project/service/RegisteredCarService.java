@@ -3,12 +3,11 @@ package project.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project.pojo.RegisteredCarsCounter;
+import project.pojo.RegisteredCarsCount;
 import project.pojo.ResponseCar;
 import project.pojo.Car;
 import project.pojo.RegisteredCar;
 import project.repository.RegisteredCarRepository;
-import project.repository.RegisteredCarCounterRepository;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -22,9 +21,6 @@ import java.util.logging.Logger;
 public class RegisteredCarService {
 
     private Logger log = Logger.getLogger("RegisteredCarService");
-
-    @Autowired
-    private RegisteredCarCounterRepository registeredCarCounterRepository;
 
     @Autowired
     private RegisteredCarRepository registeredCarRepository;
@@ -41,8 +37,8 @@ public class RegisteredCarService {
         return new ResponseCar(registeredCar.getCarNumber(), registeredCar.getTimestamp());
     }
 
-    public RegisteredCarsCounter getRegisteredCarsCount() {
-        return new RegisteredCarsCounter(registeredCarCounterRepository.count());
+    public RegisteredCarsCount getRegisteredCarsCount() {
+        return new RegisteredCarsCount(registeredCarRepository.count());
     }
 
     public List<ResponseCar> getRegisteredCarsByNumberAndDate(String carNumber, String sDate, int page, int size) {

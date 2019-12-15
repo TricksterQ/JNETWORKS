@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 @Repository
 public class RegisteredCarRepository {
 
-    private Logger log = Logger.getLogger("RegisteredCarCounterRepository");
+    private Logger log = Logger.getLogger("RegisteredCarRepository");
 
     @Autowired
     private EntityManager entityManager;
@@ -21,8 +21,13 @@ public class RegisteredCarRepository {
         entityManager.persist(car);
     }
 
+    public Long count() {
+        log.info("Getting count of registered cars");
+        return (Long) entityManager.createQuery("select count (*) from registered_car").getSingleResult();
+    }
+
     public List<RegisteredCar> findByCarNumberAndDate(String carNumber, LocalDate date, int page, int size) {
-        log.info("Search a car by number: " + carNumber + "and date" + date);
+        log.info("Searching by number: " + carNumber + "and date" + date);
         return entityManager.createQuery("from registered_car where car_number like :carNumber and formatdatetime(timestamp, 'yyyy-MM-dd') like :date", RegisteredCar.class)
                 .setParameter("carNumber", "%" + carNumber + "%")
                 .setParameter("date", "%" + date + "%")
@@ -32,6 +37,7 @@ public class RegisteredCarRepository {
     }
 
     public List<RegisteredCar> findByCarNumber(String carNumber, int page, int size) {
+        log.info("Searching by number: " + carNumber);
         return entityManager.createQuery("from registered_car where car_number like :carNumber", RegisteredCar.class)
                 .setParameter("carNumber", "%" + carNumber + "%")
                 .setFirstResult((page * size) - size)
@@ -41,6 +47,7 @@ public class RegisteredCarRepository {
 
 
     public List<RegisteredCar> findByDate(LocalDate date, int page, int size) {
+        log.info("Searching by date:" + date);
         return entityManager.createQuery("from registered_car where formatdatetime(timestamp, 'yyyy-MM-dd') like :date", RegisteredCar.class)
                 .setParameter("date", "%" + date + "%")
                 .setFirstResult((page * size) - size)
@@ -49,6 +56,7 @@ public class RegisteredCarRepository {
     }
 
     public List<RegisteredCar> findAll(int page, int size) {
+        log.info("Getting list of all registered cars");
         return entityManager.createQuery("from registered_car", RegisteredCar.class)
                 .setFirstResult((page * size) - size)
                 .setMaxResults(size)

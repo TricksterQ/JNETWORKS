@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class RegisteredCarsCounter {
+public class RegisteredCarsCount {
 
     private long registeredCarsCount;
 
